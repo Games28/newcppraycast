@@ -3,37 +3,33 @@
 void thePhysics::integrate(float& deltatime)
 {
 	vel += accelerate * deltatime;
-	pos += vel * deltatime;
+	*pos += vel * deltatime;
 }
 
-void thePhysics::constants()
+void thePhysics::physicsconstants()
 {
 	gravity = 9.8f;
 	pixels_per_meter = 50;
 	accelerate = gravity * pixels_per_meter;
 }
 
-void thePhysics::objectleft(float& deltatime)
+void thePhysics::physicsobjectlift(float& deltatime, bool& isfalling)
 {
 	if (isfalling)
 	{
 		integrate(deltatime);
+		
 	}
-
-	if (iscaught)
+	
+	if (*pos >= 0)
 	{
-		isfalling = false;
-	}
+		*pos = 0;
 
-	if (pos >= 1)
-	{
-		pos = 0;
-		isfalling = false;
+		vel *= -0.9f;
 	}
-
 }
 
-void thePhysics::setup(float& lift)
+void thePhysics::physicssetup(float& lift)
 {
-	pos = lift;
+	pos = &lift;
 }

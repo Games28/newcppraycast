@@ -10,6 +10,7 @@ public:
 	Texture() = default;
 
 	upng_t* textures[NUM_TEXTURES];
+	upng_t* characterTextures[NUM_CHARTEXTURES];
 
 	void loadTextures();
 	void freeTextures();
@@ -32,6 +33,16 @@ public:
 	"./images/armor.png" //13
 
 
+	};
+
+	const char* characterFileNames[NUM_CHARTEXTURES] = {
+		"./images/newicon.png",
+		"./images/newiconglow.png",
+		"./images/r2d2ground.png",
+		"./images/r2idletest.png",
+		"./images/crate1x64.png",
+		"./images/trooper.png",
+		"./images/trooperT.png",
 	};
 };
 

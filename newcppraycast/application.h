@@ -9,6 +9,9 @@
 #include "wall.h"
 #include "sprite.h"
 #include "physics.h"
+#include "Vec2.h"
+#include "force_powers.h"
+
 
 class Application
 {
@@ -25,8 +28,10 @@ public:
 	Wall wall;
 	Sprites sprite;
 	thePhysics phs;
+	force_powers fp;
 
 public:
+
 	Application() = default;
      void setup();
 
