@@ -116,16 +116,19 @@ void Sprites::renderSpriteProjection(graphics& gfx, Player & player, Rays& ray, 
 		//float texelWidth = textureWidth / float(spriteWidth);
 		//float texelHeight = textureHeight / float(spriteHeight);
 		
-		
+		//partial spritesheet texture
 		int tileWidth = 100;
 		int tileHeight = 100;
 
-		int curTileX = 0;
+		int curTileX = 1;
 		int curTileY = 0;
 
-		//partial spritesheet texture
+		
 		float texelWidth = tileWidth /  float(spriteWidth);
 		float texelHeight = tileHeight / float(spriteHeight);
+
+		color_t* spriteTextureBuffer = (color_t*)upng_get_buffer(texture.characterTextures[sprite.texture]);
+
 
 		for (int x = spriteLeftX; x < spriteRightX; x++)
 		{
@@ -136,25 +139,33 @@ void Sprites::renderSpriteProjection(graphics& gfx, Player & player, Rays& ray, 
 			//int textureOffSetX = distanceFromLeft * texelWidth;
 
 			//partial texture
+			int screenOffsetX = (spriteWidth / 2);
 			int textureOffSetX = (curTileX * tileWidth) + distanceFromLeft * texelWidth;
 
 			for (int y = spriteTopY; y < spriteBottomY; y++)
 			{
-				int distanceFromTop = y - sprite.Slift + (spriteHeight / 2) - (WINDOW_HEIGHT / 2);
+				//int distanceFromTop = y - sprite.Slift + (spriteHeight / 2) - (WINDOW_HEIGHT / 2);
+				int distanceFromTop = y - spriteTopY;
 				//full texture
 				//int textureOffSetY = distanceFromTop * texelHeight;
+				
 				//partial texture
+				int screenOffsetY = (spriteHeight / 2) - (WINDOW_HEIGHT / 2) - sprite.Slift;
 				int textureOffSetY = (curTileY * tileHeight) + distanceFromTop * texelHeight;
 
 				if (x > 0 && x < WINDOW_WIDTH && y > 0 && y < WINDOW_HEIGHT)
 				{
 
-					color_t* spriteTextureBuffer = (color_t*)upng_get_buffer(texture.characterTextures[sprite.texture]);
+					
+					
 					
 					color_t texelColor = spriteTextureBuffer[(textureWidth  * textureOffSetY) + textureOffSetX];
 
 					if (sprite.distance < ray.rays[x].distance && texelColor != 0xffff00ff)
-						gfx.drawPixel(x, y, texelColor);
+						gfx.drawPixel(
+							x + screenOffsetX,
+							y + screenOffsetY,
+							texelColor);
 				}
 
 			}
